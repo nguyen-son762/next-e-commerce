@@ -1,28 +1,28 @@
-import * as React from 'react'
-import Head from 'next/head'
-import { AppProps } from 'next/app'
-import { ThemeProvider } from '@mui/material/styles'
-import CssBaseline from '@mui/material/CssBaseline'
-import { CacheProvider, EmotionCache } from '@emotion/react'
-import theme from '@/themes/theme'
-import createEmotionCache from '@/themes/createEmotionCache'
+import * as React from "react";
+import Head from "next/head";
+import { AppProps } from "next/app";
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import { CacheProvider, EmotionCache } from "@emotion/react";
+import theme from "@/themes/theme";
+import createEmotionCache from "@/themes/createEmotionCache";
 
 // Client-side cache, shared for the whole session of the user in the browser.
-const clientSideEmotionCache = createEmotionCache()
+const clientSideEmotionCache = createEmotionCache();
 
 interface MyAppProps extends AppProps {
-  emotionCache?: EmotionCache
+  emotionCache?: EmotionCache;
 }
 
 export default function MyApp(props: MyAppProps) {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
+  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   React.useEffect(() => {
     const jssStyles: HTMLElement | null =
-      document.querySelector('#jss-server-side')
+      document.querySelector("#jss-server-side");
     if (jssStyles && jssStyles.parentElement) {
-      jssStyles.parentElement.removeChild(jssStyles)
+      jssStyles.parentElement.removeChild(jssStyles);
     }
-  }, [])
+  }, []);
 
   return (
     <CacheProvider value={emotionCache}>
@@ -35,5 +35,5 @@ export default function MyApp(props: MyAppProps) {
         <Component {...pageProps} />
       </ThemeProvider>
     </CacheProvider>
-  )
+  );
 }

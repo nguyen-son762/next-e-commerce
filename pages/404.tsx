@@ -1,13 +1,9 @@
-import Head from 'next/head'
+import Head from "next/head";
 
 interface Iprops {
-  statusCode: number
+  statusCode: number;
 }
 function PageError({ statusCode }: Iprops) {
-  return (
-    <p>
-      404- Not found
-    </p>
-  )
+  return <p>404- Not found</p>;
 }
-export default PageError
+export default PageError;

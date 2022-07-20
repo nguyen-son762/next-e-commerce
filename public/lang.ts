@@ -1,12 +1,12 @@
 const lang = {
   en: {
-    title: 'Hello',
+    title: "Hello",
   },
   vn: {
-    title: 'Xin chào',
+    title: "Xin chào",
   },
   fr: {
-    title: 'Salut',
+    title: "Salut",
   },
-}
-export default lang
+};
+export default lang;

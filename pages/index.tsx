@@ -1,24 +1,24 @@
-import Loader from '@/components/atoms/Loader'
-import Products from '@/products/components/Products'
+import Loader from "@/components/atoms/Loader";
+import Products from "@/products/components/Products";
 import {
   getProductApiByPageAndTypeAndPrice,
   ProductDef,
-} from '@/products/product'
-import type { GetStaticProps, NextPage } from 'next'
-import dynamic from 'next/dynamic'
-import Head from 'next/head'
-import { Suspense } from 'react'
+} from "@/products/product";
+import type { GetStaticProps, NextPage } from "next";
+import dynamic from "next/dynamic";
+import Head from "next/head";
+import { Suspense } from "react";
 const DefaultLayout = dynamic(
-  () => import('@/components/layout/DefaultLayout'),
+  () => import("@/components/layout/DefaultLayout"),
   { suspense: true, ssr: false }
-)
-import Error from 'next/error'
-import useTrans from '@/hooks/useTrans'
+);
+import Error from "next/error";
+import useTrans from "@/hooks/useTrans";
 interface Iprops {
-  products: ProductDef[]
+  products: ProductDef[];
 }
 const Home: NextPage<Iprops> = ({ products }) => {
-  const t = useTrans()
+  const t = useTrans();
   return (
     <div>
       <Head>
@@ -27,18 +27,18 @@ const Home: NextPage<Iprops> = ({ products }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Suspense fallback={<Loader />}>
-        <p style={{ textAlign: 'center' }}>{t.title}</p>
+        <p style={{ textAlign: "center" }}>{t.title}</p>
         {/* <DefaultLayout>
           <Products products={products} />
           <p>{t.title}</p>
         </DefaultLayout> */}
       </Suspense>
     </div>
-  )
-}
+  );
+};
 
-export default Home
-export const getStaticProps: GetStaticProps = async (context) => {
+export default Home;
+export const getStaticProps: GetStaticProps = async context => {
   // const data = await getProductApiByPageAndTypeAndPrice({})
   // if (data && data.data.data.length > 0) {
   //   return {
@@ -53,5 +53,5 @@ export const getStaticProps: GetStaticProps = async (context) => {
       products: [],
     },
     revalidate: 1,
-  }
-}
+  };
+};

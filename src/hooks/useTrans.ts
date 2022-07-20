@@ -1,13 +1,13 @@
-import { useRouter } from 'next/router'
-import lang from '~/public/lang'
+import { useRouter } from "next/router";
+import lang from "~/public/lang";
 type LangEnum = {
-  vn: 'vn'
-  en: 'en'
-}
+  vn: "vn";
+  en: "en";
+};
 const useTrans = () => {
-  const { locale = 'vn' } = useRouter()
+  const { locale = "vn" } = useRouter();
 
-  return lang[locale as keyof LangEnum]
-}
+  return lang[locale as keyof LangEnum];
+};
 
-export default useTrans
+export default useTrans;

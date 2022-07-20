@@ -1,10 +1,10 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
-  if (request.nextUrl.pathname.startsWith('/account/signup')) {
-    return NextResponse.redirect(new URL('/', request.url))
+  if (request.nextUrl.pathname.startsWith("/account/signup")) {
+    return NextResponse.redirect(new URL("/", request.url));
   }
   // const response = NextResponse.next()
 
@@ -15,5 +15,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/about/:path*', '/dashboard/:path*'],
-}
+  matcher: ["/about/:path*", "/dashboard/:path*"],
+};

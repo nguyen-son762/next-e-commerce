@@ -1,7 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function Account() {
-  return <div>Accoujwt.guard.tsnt</div>
+  return <div>Accoujwt.guard.tsnt</div>;
 }
 
-export default Account
+export default Account;

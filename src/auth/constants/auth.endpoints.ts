@@ -1,4 +1,4 @@
 export enum AuthEndpointsEnum {
-  LOGIN = '/users/login',
-  SIGNUP = '/users/signup',
+  LOGIN = "/users/login",
+  SIGNUP = "/users/signup",
 }

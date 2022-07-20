@@ -1,4 +1,4 @@
 export type SizeDef = {
-  size_id: number
-  name: string
-}
+  size_id: number;
+  name: string;
+};

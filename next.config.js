@@ -6,26 +6,26 @@ const nextConfig = {
   },
   reactStrictMode: false,
   images: {
-    domains: ['images.unsplash.com', 'https://images.unsplash.com/'],
+    domains: ["images.unsplash.com", "https://images.unsplash.com/"],
   },
   i18n: {
-    locales: ['vn', 'fr', 'en'],
-    defaultLocale: 'vn',
+    locales: ["vn", "fr", "en"],
+    defaultLocale: "vn",
     localeDetection: false,
   },
   headers() {
     return [
       {
-        source: '/:path*',
+        source: "/:path*",
         headers: [
           {
-            key: 'Accept-Language',
-            value: 'en',
+            key: "Accept-Language",
+            value: "en",
           },
         ],
       },
-    ]
+    ];
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

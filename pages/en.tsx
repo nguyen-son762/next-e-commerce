@@ -1,7 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function en() {
-  return <div>This is lang end</div>
+  return <div>This is lang end</div>;
 }
 
-export default en
+export default en;

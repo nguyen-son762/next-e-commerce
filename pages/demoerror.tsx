@@ -1,21 +1,19 @@
-import { GetServerSideProps } from 'next'
-import { useEffect } from 'react'
+import { GetServerSideProps } from "next";
+import { useEffect } from "react";
 function Demoerror() {
   useEffect(() => {
-    throw new Error('Blocken');
-  }, [])
-  
-  return (
-    <p>Hello</p>
-  )
+    throw new Error("Blocken");
+  }, []);
+
+  return <p>Hello</p>;
 }
 
-export default Demoerror
+export default Demoerror;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async context => {
   return {
     props: {
-      name: '12313',
+      name: "12313",
     },
-  }
-}
+  };
+};

@@ -1,10 +1,10 @@
-import Header from "@/components/layout/Header/Header";
-import { Divider } from "@mui/material";
-import { memo, ReactNode } from "react";
-import Navbar from "./Navbar/Navbar";
+import Header from '@/components/layout/Header/Header'
+import { Divider } from '@mui/material'
+import { memo, ReactNode } from 'react'
+import Navbar from './Navbar/Navbar'
 
 interface Iprops {
-  children: ReactNode;
+  children: ReactNode
 }
 
 function DefaultLayout({ children }: Iprops) {
@@ -15,7 +15,7 @@ function DefaultLayout({ children }: Iprops) {
       <Navbar />
       {children}
     </main>
-  );
+  )
 }
 
-export default memo(DefaultLayout);
+export default memo(DefaultLayout)

@@ -24,7 +24,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/components/layout/DefaultLayout.tss"
-, "next.config.js"  ],
+    "src/components/layout/DefaultLayout.tss",
+    "next.config.js"
+  ],
   "exclude": ["node_modules"]
 }

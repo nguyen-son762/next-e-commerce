@@ -1,21 +1,25 @@
-import Loader from "@/components/atoms/Loader";
-import Products from "@/products/components/Products";
-import { getProductApiByPageAndTypeAndPrice, ProductDef } from "@/products/product";
-import type { GetStaticProps, NextPage } from "next";
-import dynamic from "next/dynamic";
-import Head from "next/head";
-import { Suspense } from "react";
+import Loader from '@/components/atoms/Loader'
+import Products from '@/products/components/Products'
+import {
+  getProductApiByPageAndTypeAndPrice,
+  ProductDef,
+} from '@/products/product'
+import type { GetStaticProps, NextPage } from 'next'
+import dynamic from 'next/dynamic'
+import Head from 'next/head'
+import { Suspense } from 'react'
 const DefaultLayout = dynamic(
-  () => import("@/components/layout/DefaultLayout"),
-  { suspense: true,ssr:false }
-);
+  () => import('@/components/layout/DefaultLayout'),
+  { suspense: true, ssr: false }
+)
 import Error from 'next/error'
-import useTrans from "@/hooks/useTrans";
-interface Iprops{
-  products:ProductDef[]
+import useTrans from '@/hooks/useTrans'
+interface Iprops {
+  products: ProductDef[]
 }
-const Home: NextPage<Iprops> = ({products}) => {
-  const t= useTrans()
+const Home: NextPage<Iprops> = ({ products }) => {
+  const t = useTrans()
+  console.log(products)
   return (
     <div>
       <Head>
@@ -24,36 +28,31 @@ const Home: NextPage<Iprops> = ({products}) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Suspense fallback={<Loader />}>
-        <DefaultLayout>
+        <p style={{ textAlign: 'center' }}>{t.title}</p>
+        {/* <DefaultLayout>
           <Products products={products} />
           <p>{t.title}</p>
-        </DefaultLayout>
+        </DefaultLayout> */}
       </Suspense>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
 export const getStaticProps: GetStaticProps = async (context) => {
-  getProductApiByPageAndTypeAndPrice({}).then(data=>{
-    return {
-      props:{
-        products:data.data.data
-      },
-      revalidate:1
-    }
-  }).catch(()=>{
-    return {
-      props:{
-        products:[]
-      },
-      revalidate:1
-    }
-  })
+  // const data = await getProductApiByPageAndTypeAndPrice({})
+  // if (data && data.data.data.length > 0) {
+  //   return {
+  //     props: {
+  //       products: data.data.data,
+  //     },
+  //     revalidate: 1,
+  //   }
+  // }
   return {
-    props:{
-      products:[]
+    props: {
+      products: [],
     },
-    revalidate:1
+    revalidate: 1,
   }
 }

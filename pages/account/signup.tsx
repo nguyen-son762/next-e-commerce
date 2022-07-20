@@ -1,107 +1,108 @@
-import { AuthPathsEnum } from "@/auth/auth";
+import { AuthPathsEnum } from '@/auth/auth'
 import {
   FIELDS_INPUT_SIGNUP,
   InitialSignupValues,
   phoneRegExp,
-} from "@/auth/constants/constants";
-import useStore from "@/auth/store/auth";
-import CustomTextField from "@/components/atoms/CustomTextField";
-import Loader from "@/components/atoms/Loader";
-import theme from "@/themes/theme";
-import { LoadingButton } from "@mui/lab";
-import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
-import { useFormik } from "formik";
+} from '@/auth/constants/constants'
+import useStore from '@/auth/store/auth'
+import CustomTextField from '@/components/atoms/CustomTextField'
+import Loader from '@/components/atoms/Loader'
+import theme from '@/themes/theme'
+import { LoadingButton } from '@mui/lab'
+import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material'
+import { useFormik } from 'formik'
 const DefaultLayout = dynamic(
-  () => import("@/components/layout/DefaultLayout"),
+  () => import('@/components/layout/DefaultLayout'),
   { suspense: true, ssr: false }
-);
+)
 
-import { NextPage } from "next";
-import dynamic from "next/dynamic";
-import Head from "next/head";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { Suspense, useEffect, useState } from "react";
-import * as yup from "yup";
+import { NextPage } from 'next'
+import dynamic from 'next/dynamic'
+import Head from 'next/head'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { Suspense, useEffect, useState } from 'react'
+import * as yup from 'yup'
 
 const schema = yup.object({
   first_name: yup
     .string()
     .trim()
-    .required("Firstname is required")
-    .min(2, "Firstname must be at least 5 characters"),
+    .required('Firstname is required')
+    .min(2, 'Firstname must be at least 5 characters'),
   last_name: yup
     .string()
     .trim()
-    .required("Lastname is required")
-    .min(2, "Lastname must be at least 5 characters"),
+    .required('Lastname is required')
+    .min(2, 'Lastname must be at least 5 characters'),
   email: yup
     .string()
     .trim()
-    .required("Email is required")
-    .email("Invalid email"),
+    .required('Email is required')
+    .email('Invalid email'),
   phonenumber: yup
     .string()
-    .required("Phone number is required")
-    .matches(phoneRegExp, "Phone number is not valid"),
+    .required('Phone number is required')
+    .matches(phoneRegExp, 'Phone number is not valid'),
   password: yup
     .string()
     .trim()
-    .required("Password is required")
-    .min(5, "Password must be at least 5 characters"),
+    .required('Password is required')
+    .min(5, 'Password must be at least 5 characters'),
   confirmPassword: yup
     .string()
     .trim()
-    .required("Password is required")
-    .oneOf([yup.ref("password"), null], "Passwords must match"),
-});
+    .required('Password is required')
+    .oneOf([yup.ref('password'), null], 'Passwords must match'),
+})
 
 const Signup: NextPage = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  const { user, signup } = useStore();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const { signup } = useStore()
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
+  const router = useRouter()
 
   const formik = useFormik({
     initialValues: {
-      first_name: "",
-      last_name: "",
-      email: "",
-      password: "",
-      phonenumber: "",
-      confirmPassword: "",
+      first_name: '',
+      last_name: '',
+      email: '',
+      password: '',
+      phonenumber: '',
+      confirmPassword: '',
     } as InitialSignupValues,
     validationSchema: schema,
     onSubmit: async (values) => {
-      const { first_name, last_name, email, password, phonenumber } = values;
-      setLoading(true);
+      const { first_name, last_name, email, password, phonenumber } = values
+      setLoading(true)
       const user = await signup({
         first_name,
         last_name,
         email,
         password,
         phonenumber,
-      });
-      setLoading(false);
+      })
+      setLoading(false)
       if (user) {
-        router.push("/");
-        return;
+        router.push('/')
+        return
       }
-      setError(true);
+      setError(true)
     },
     validateOnBlur: true,
-  });
+  })
 
   useEffect(() => {
-    setMounted(true);
-    if (user && user.user_id) {
-      router.push("/");
-    }
-  }, []);
-  if (!mounted) return null;
-
+    setMounted(true)
+    // if (user && user.user_id) {
+    //   router.push("/");
+    // }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  if (!mounted) return null
+  return <div>Sign up</div>
   const renderFieldsInput = () => {
     return FIELDS_INPUT_SIGNUP.map((field) => {
       return (
@@ -111,11 +112,11 @@ const Signup: NextPage = () => {
             variant="outlined"
             label={field.label}
             type={
-              field.name === "password" || field.name === "confirmPassword"
+              field.name === 'password' || field.name === 'confirmPassword'
                 ? showPassword
-                  ? "text"
-                  : "password"
-                : "text"
+                  ? 'text'
+                  : 'password'
+                : 'text'
             }
             size="medium"
             width="100%"
@@ -132,9 +133,9 @@ const Signup: NextPage = () => {
             {formik.errors[field.name as keyof InitialSignupValues]}
           </Typography>
         </Box>
-      );
-    });
-  };
+      )
+    })
+  }
   return (
     <div>
       <Head>
@@ -195,9 +196,9 @@ const Signup: NextPage = () => {
                 <Typography
                   mt={2}
                   sx={{
-                    textDecoration: "underline",
+                    textDecoration: 'underline',
                     color: theme.palette.primary.main,
-                    cursor: "pointer",
+                    cursor: 'pointer',
                   }}
                 >
                   Login with an exist account
@@ -208,7 +209,7 @@ const Signup: NextPage = () => {
         </DefaultLayout>
       </Suspense>
     </div>
-  );
-};
+  )
+}
 
-export default Signup;
+export default Signup

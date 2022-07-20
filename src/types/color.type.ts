@@ -1,5 +1,5 @@
 export type ColorDef = {
-    color_id:number;
-    code?:string;
-    name?:string;
+  color_id: number
+  code?: string
+  name?: string
 }

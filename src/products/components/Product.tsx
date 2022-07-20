@@ -4,31 +4,30 @@ import {
   CardActionArea,
   CardActions,
   CardContent,
-  CardMedia,
   createTheme,
   Typography,
-} from "@mui/material";
-import { ProductDef } from "../product";
-import Image from "next/image";
-import DefaultImage from "~/public/default-thumbnail.jpeg";
-import { makeStyles } from "@mui/styles";
+} from '@mui/material'
+import { ProductDef } from '../product'
+import Image from 'next/image'
+import DefaultImage from '~/public/images/default-thumbnail.jpeg'
+import { makeStyles } from '@mui/styles'
 interface Iprops {
-  product: ProductDef;
+  product: ProductDef
 }
 
-const theme = createTheme();
+const theme = createTheme()
 const useStyles = makeStyles({
   card: {
     width: 280,
-    gap:10,
-    [theme.breakpoints.down("xs")]: {
+    gap: 10,
+    [theme.breakpoints.down('xs')]: {
       with: 200,
     },
   },
-});
+})
 
 function Product({ product }: Iprops) {
-  const classess = useStyles();
+  const classess = useStyles()
   return (
     <Card className={classess.card}>
       <CardActionArea>
@@ -61,7 +60,7 @@ function Product({ product }: Iprops) {
         </Button>
       </CardActions>
     </Card>
-  );
+  )
 }
 
-export default Product;
+export default Product

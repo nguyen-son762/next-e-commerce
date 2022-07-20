@@ -1,33 +1,33 @@
-import { TextField } from "@mui/material";
-import React, { ChangeEvent, ChangeEventHandler, FocusEventHandler } from "react";
+import { TextField } from '@mui/material'
+import React, { ChangeEventHandler, FocusEventHandler } from 'react'
 
-type typeVariant = "standard" | "filled" | "outlined" | undefined;
-type Size = 'medium'| 'small'
+type typeVariant = 'standard' | 'filled' | 'outlined' | undefined
+type Size = 'medium' | 'small'
 interface Iprops {
-  fullWidth?: boolean;
-  id?: string;
-  name: string;
-  label?: string;
-  type?: string;
-  value: string;
-  variant?: typeVariant;
+  fullWidth?: boolean
+  id?: string
+  name: string
+  label?: string
+  type?: string
+  value: string
+  variant?: typeVariant
   onChange?:
     | ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
-    | undefined;
-  error?: boolean | undefined;
-  helperText?: boolean | string | undefined;
-  className?: string;
-  width?: number|string;
-  isTextSearch?: boolean;
-  size?:Size,
-  maxWidth?:number|string;
-  onFocus?:FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+    | undefined
+  error?: boolean | undefined
+  helperText?: boolean | string | undefined
+  className?: string
+  width?: number | string
+  isTextSearch?: boolean
+  size?: Size
+  maxWidth?: number | string
+  onFocus?: FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>
 }
 
 function CustomTextField({
   fullWidth,
-  variant = "standard",
-  type = "text",
+  variant = 'standard',
+  type = 'text',
   isTextSearch = false,
   width,
   maxWidth,
@@ -37,7 +37,7 @@ function CustomTextField({
     <TextField
       sx={{
         width,
-        maxWidth
+        maxWidth,
       }}
       inputProps={{
         style: {
@@ -49,7 +49,7 @@ function CustomTextField({
       type={type}
       {...rest}
     />
-  );
+  )
 }
 
-export default CustomTextField;
+export default CustomTextField

@@ -1,17 +1,17 @@
 export const navList = [
   {
-    name: "best sellers",
-    label: "Best sellers",
-    href: "/",
+    name: 'best sellers',
+    label: 'Best sellers',
+    href: '/',
   },
   {
-    name: "shirts",
-    label: "Shirts",
-    href: "/about",
+    name: 'shirts',
+    label: 'Shirts',
+    href: '/about',
   },
   {
-    name: "t-shirts",
-    label: "T-shirts",
-    href: "/home",
+    name: 't-shirts',
+    label: 'T-shirts',
+    href: '/home',
   },
-];
+]

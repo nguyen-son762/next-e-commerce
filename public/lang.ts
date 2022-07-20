@@ -1,11 +1,12 @@
-export default {
-    en:{
-        title:"Viet nam"
-    },
-    vn:{
-        title:"Việt Nam"
-    },
-    fr:{
-        title:"heheh"
-    }
+const lang = {
+  en: {
+    title: 'Hello',
+  },
+  vn: {
+    title: 'Xin chào',
+  },
+  fr: {
+    title: 'Salut',
+  },
 }
+export default lang

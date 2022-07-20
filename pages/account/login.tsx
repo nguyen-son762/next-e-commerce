@@ -1,71 +1,71 @@
-import { AuthPathsEnum } from "@/auth/auth";
-import useStore from "@/auth/store/auth";
-import CustomTextField from "@/components/atoms/CustomTextField";
-import Loader from "@/components/atoms/Loader";
-import theme from "@/themes/theme";
-import { LoadingButton } from "@mui/lab";
-import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
-import { useFormik } from "formik";
+import { AuthPathsEnum } from '@/auth/auth'
+import useStore from '@/auth/store/auth'
+import CustomTextField from '@/components/atoms/CustomTextField'
+import Loader from '@/components/atoms/Loader'
+import theme from '@/themes/theme'
+import { LoadingButton } from '@mui/lab'
+import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material'
+import { useFormik } from 'formik'
 const DefaultLayout = dynamic(
-  () => import("@/components/layout/DefaultLayout"),
-  { suspense: true,ssr:false }
-);
+  () => import('@/components/layout/DefaultLayout'),
+  { suspense: true, ssr: false }
+)
 
-import { NextPage } from "next";
-import dynamic from "next/dynamic";
-import Head from "next/head";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { Suspense, useEffect, useState } from "react";
-import * as yup from "yup";
+import { NextPage } from 'next'
+import dynamic from 'next/dynamic'
+import Head from 'next/head'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { Suspense, useEffect, useState } from 'react'
+import * as yup from 'yup'
 
 const schema = yup.object({
   email: yup
     .string()
     .trim()
-    .required("Email is required")
-    .email("Invalid email"),
+    .required('Email is required')
+    .email('Invalid email'),
   password: yup
     .string()
     .trim()
-    .required("Password is required")
-    .min(5, "Password must be at least 5 characters"),
-});
+    .required('Password is required')
+    .min(5, 'Password must be at least 5 characters'),
+})
 
 const Login: NextPage = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  const { login } = useStore();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const { login } = useStore()
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
+  const router = useRouter()
 
   const formik = useFormik({
     initialValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
     validationSchema: schema,
     onSubmit: async (values) => {
-      setLoading(true);
+      setLoading(true)
       const user = await login({
         email: values.email,
         password: values.password,
-      });
-      setLoading(false);
+      })
+      setLoading(false)
       if (user) {
         router.push('/', '/', { locale: 'vn' })
-        return;
+        return
       }
-      setError(true);
+      setError(true)
     },
     validateOnBlur: true,
-  });
+  })
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
-  if (!mounted) return null;
+    setMounted(true)
+  }, [])
+  if (!mounted) return null
 
   return (
     <div>
@@ -116,7 +116,7 @@ const Login: NextPage = () => {
                   variant="outlined"
                   label="Password"
                   size="medium"
-                  type={!showPassword ? "password" : "text"}
+                  type={!showPassword ? 'password' : 'text'}
                   width="100%"
                   value={formik.values.password}
                   onChange={formik.handleChange}
@@ -167,9 +167,9 @@ const Login: NextPage = () => {
                 <Typography
                   mt={2}
                   sx={{
-                    textDecoration: "underline",
+                    textDecoration: 'underline',
                     color: theme.palette.primary.main,
-                    cursor: "pointer",
+                    cursor: 'pointer',
                   }}
                 >
                   Create an account
@@ -180,7 +180,7 @@ const Login: NextPage = () => {
         </DefaultLayout>
       </Suspense>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

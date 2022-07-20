@@ -19,7 +19,6 @@ interface Iprops {
 }
 const Home: NextPage<Iprops> = ({ products }) => {
   const t = useTrans()
-  console.log(products)
   return (
     <div>
       <Head>

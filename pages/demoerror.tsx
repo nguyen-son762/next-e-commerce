@@ -1,12 +1,16 @@
 import { GetServerSideProps } from 'next'
-import Error from 'next/error'
-function demoerror() {
+import { useEffect } from 'react'
+function Demoerror() {
+  useEffect(() => {
+    throw new Error('Blocken');
+  }, [])
+  
   return (
-    <Error statusCode={401}></Error>
+    <p>Hello</p>
   )
 }
 
-export default demoerror
+export default Demoerror
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return {

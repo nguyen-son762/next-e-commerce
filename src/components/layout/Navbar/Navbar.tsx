@@ -1,11 +1,10 @@
 import { navList } from "@/types/navbar.type";
-import { Box, createTheme, Divider, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { memo } from "react";
-
-const theme = createTheme();
+import theme from "@/themes/theme";
 const useStyles = makeStyles({
   navItemActive: {
     "&::before": {
@@ -23,6 +22,7 @@ const useStyles = makeStyles({
 function Navbar() {
   const classess = useStyles();
   const router = useRouter();
+
   const renderNav = () => {
     return navList.map(navItem => {
       return (
@@ -33,13 +33,20 @@ function Navbar() {
           mx={2}
           position="relative"
           className={
-            router.pathname === navItem.href ? classess.navItemActive : ""
+            Number(router.query.type || 1) === navItem.type
+              ? classess.navItemActive
+              : ""
           }
           key={navItem.name}
         >
-          <Link href={navItem.href}>
-            <Typography fontWeight={600}>{navItem.label}</Typography>
-          </Link>
+          <Typography
+            onClick={() =>
+              router.push(navItem.href, undefined, { shallow: true })
+            }
+            fontWeight={600}
+          >
+            {navItem.label}
+          </Typography>
         </Box>
       );
     });

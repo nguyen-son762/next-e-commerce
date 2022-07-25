@@ -8,6 +8,8 @@ export type GetProductParamsDef = {
   page?: number;
   min_price?: number;
   keyword?: string;
+  order_by_value?: string | null;
+  order_by_name?: string | null;
 };
 
 export type ProductDef = {

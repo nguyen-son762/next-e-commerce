@@ -4,21 +4,59 @@ import {
   getProductApiByPageAndTypeAndPrice,
   ProductDef,
 } from "@/products/product";
-import type { GetStaticProps, NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import dynamic from "next/dynamic";
 import Head from "next/head";
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 const DefaultLayout = dynamic(
   () => import("@/components/layout/DefaultLayout"),
   { suspense: true, ssr: false }
 );
 import Error from "next/error";
 import useTrans from "@/hooks/useTrans";
+import { Box } from "@mui/system";
+import { makeStyles } from "@mui/styles";
+import theme from "@/themes/theme";
+import { useRouter } from "next/router";
+import SearchSelectBox from "@/components/layout/SearchSelectBox/SearchSelectBox";
+
 interface Iprops {
   products: ProductDef[];
+  price: any;
 }
-const Home: NextPage<Iprops> = ({ products }) => {
+const useStyles = makeStyles({
+  container: {
+    [theme.breakpoints.up("md")]: {
+      margin: "30px 20px",
+    },
+  },
+});
+const Home: NextPage<Iprops> = ({ products, price }) => {
   const t = useTrans();
+  const classess = useStyles();
+  const router = useRouter();
+  const [listProduct, setListProduct] = useState(products);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // return <Error statusCode={500} />;
+  useEffect(() => {
+    setIsLoading(true);
+    async function getData() {
+      const data = await getProductApiByPageAndTypeAndPrice({
+        type: Number(router.query.type) || 0,
+        order_by_name: (router.query.order_by_name as string) || "",
+        order_by_value: (router.query.order_by_value as string) || "",
+      });
+      setListProduct(data.data.data || []);
+      setIsLoading(false);
+    }
+    getData();
+  }, [
+    router.query.type,
+    router.query.order_by_name,
+    router.query.order_by_value,
+  ]);
+
   return (
     <div>
       <Head>
@@ -27,31 +65,42 @@ const Home: NextPage<Iprops> = ({ products }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Suspense fallback={<Loader />}>
-        <p style={{ textAlign: "center" }}>{t.title}</p>
-        {/* <DefaultLayout>
-          <Products products={products} />
-          <p>{t.title}</p>
-        </DefaultLayout> */}
+        {/* <p style={{ textAlign: "center", fontSize: "50px", marginTop: "50px" }}>
+          {t.title}
+        </p> */}
+        <DefaultLayout>
+          <SearchSelectBox />
+          <Box className={classess.container}>
+            {isLoading ? <Loader /> : <Products products={listProduct} />}
+          </Box>
+        </DefaultLayout>
       </Suspense>
     </div>
   );
 };
 
 export default Home;
-export const getStaticProps: GetStaticProps = async context => {
-  // const data = await getProductApiByPageAndTypeAndPrice({})
-  // if (data && data.data.data.length > 0) {
-  //   return {
-  //     props: {
-  //       products: data.data.data,
-  //     },
-  //     revalidate: 1,
-  //   }
-  // }
-  return {
-    props: {
-      products: [],
-    },
-    revalidate: 1,
-  };
+export const getServerSideProps: GetServerSideProps = async context => {
+  try {
+    const param = context.query;
+    const data = await getProductApiByPageAndTypeAndPrice(param);
+    if (data && data.data.data.length > 0) {
+      return {
+        props: {
+          products: data.data.data,
+        },
+      };
+    }
+    return {
+      props: {
+        products: [],
+      },
+    };
+  } catch {
+    return {
+      props: {
+        products: [],
+      },
+    };
+  }
 };

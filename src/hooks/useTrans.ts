@@ -3,6 +3,7 @@ import lang from "~/public/lang";
 type LangEnum = {
   vn: "vn";
   en: "en";
+  fr: "fr";
 };
 const useTrans = () => {
   const { locale = "vn" } = useRouter();

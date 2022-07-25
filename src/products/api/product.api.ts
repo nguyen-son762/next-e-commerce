@@ -6,19 +6,9 @@ import { GetProductParamsDef } from "../product";
 export const getProductApiByPageAndTypeAndPrice = (
   params: GetProductParamsDef
 ): Promise<AxiosResponse> => {
-  const { keyword, type, page, min_price } = params;
-  let query = {};
-  if (keyword) {
-    query = { ...query, keyword };
-  }
-  if (type) {
-    query = { ...query, type };
-  }
-  if (page) {
-    query = { ...query, page };
-  }
-  if (min_price) {
-    query = { ...query, min_price };
-  }
-  return api.get(ProductEndpointsEnum.GET_LIST, { params: query });
+  return api.get(ProductEndpointsEnum.GET_LIST, { params });
+};
+
+export const getProductDetail = (id: string): Promise<AxiosResponse> => {
+  return api.get(ProductEndpointsEnum.GET_DETAIL.replace(":id", id));
 };

@@ -101,8 +101,6 @@ const Signup: NextPage = () => {
     // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  if (!mounted) return null;
-  return <div>Sign up</div>;
   const renderFieldsInput = () => {
     return FIELDS_INPUT_SIGNUP.map(field => {
       return (

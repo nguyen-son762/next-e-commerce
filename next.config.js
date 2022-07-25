@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
+// const isProd = process.env.NODE_ENV === "production";
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   compiler: {
     styledComponents: true,
   },
-  reactStrictMode: false,
   images: {
     domains: ["images.unsplash.com", "https://images.unsplash.com/"],
   },
@@ -20,11 +20,15 @@ const nextConfig = {
         headers: [
           {
             key: "Accept-Language",
-            value: "en",
+            value: "vn",
           },
         ],
       },
     ];
+  },
+  // assetPrefix: isProd ? "https://cdn.mydomain.com" : "",
+  env: {
+    customKey: "my-value",
   },
 };
 

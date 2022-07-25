@@ -6,6 +6,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import theme from "@/themes/theme";
 import createEmotionCache from "@/themes/createEmotionCache";
+import { api } from "@/apis/api";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -22,6 +23,8 @@ export default function MyApp(props: MyAppProps) {
     if (jssStyles && jssStyles.parentElement) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
+    //get csrf token
+    api.get(process.env.NEXT_PUBLIC_DB_HOST || "http://localhost:4000");
   }, []);
 
   return (

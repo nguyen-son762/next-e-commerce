@@ -1,61 +1,33 @@
-import Loader from "@/components/atoms/Loader";
-import Products from "@/products/components/Products";
-import {
-  getProductApiByPageAndTypeAndPrice,
-  ProductDef,
-} from "@/products/product";
+import { Suspense } from "react";
 import type { GetServerSideProps, NextPage } from "next";
 import dynamic from "next/dynamic";
 import Head from "next/head";
-import { Suspense, useEffect, useState } from "react";
+import useTrans from "@/hooks/useTrans";
+import { Box } from "@mui/system";
+
+import {
+  getProductApiByPageAndTypeAndPrice,
+  ProductDef,
+} from "@/features/products/product";
+import { useStyles } from "@/themes/style";
+import Products from "@/features/products/components/Products";
+import Loader from "@/components/atoms/Loader";
+import SearchSelectBox from "@/components/layout/SearchSelectBox/SearchSelectBox";
+import PaginationCustom from "@/components/atoms/PaginationCustom";
 const DefaultLayout = dynamic(
   () => import("@/components/layout/DefaultLayout"),
   { suspense: true, ssr: false }
 );
-import Error from "next/error";
-import useTrans from "@/hooks/useTrans";
-import { Box } from "@mui/system";
-import { makeStyles } from "@mui/styles";
-import theme from "@/themes/theme";
-import { useRouter } from "next/router";
-import SearchSelectBox from "@/components/layout/SearchSelectBox/SearchSelectBox";
 
 interface Iprops {
   products: ProductDef[];
-  price: any;
+  totalPage?: number;
+  page?: number;
 }
-const useStyles = makeStyles({
-  container: {
-    [theme.breakpoints.up("md")]: {
-      margin: "30px 20px",
-    },
-  },
-});
-const Home: NextPage<Iprops> = ({ products, price }) => {
+
+const Home: NextPage<Iprops> = ({ products, page = 1, totalPage = 1 }) => {
   const t = useTrans();
   const classess = useStyles();
-  const router = useRouter();
-  const [listProduct, setListProduct] = useState(products);
-  const [isLoading, setIsLoading] = useState(false);
-
-  // return <Error statusCode={500} />;
-  useEffect(() => {
-    setIsLoading(true);
-    async function getData() {
-      const data = await getProductApiByPageAndTypeAndPrice({
-        type: Number(router.query.type) || 0,
-        order_by_name: (router.query.order_by_name as string) || "",
-        order_by_value: (router.query.order_by_value as string) || "",
-      });
-      setListProduct(data.data.data || []);
-      setIsLoading(false);
-    }
-    getData();
-  }, [
-    router.query.type,
-    router.query.order_by_name,
-    router.query.order_by_value,
-  ]);
 
   return (
     <div>
@@ -71,8 +43,9 @@ const Home: NextPage<Iprops> = ({ products, price }) => {
         <DefaultLayout>
           <SearchSelectBox />
           <Box className={classess.container}>
-            {isLoading ? <Loader /> : <Products products={listProduct} />}
+            <Products products={products} />
           </Box>
+          <PaginationCustom page={page} totalPage={totalPage} />
         </DefaultLayout>
       </Suspense>
     </div>
@@ -80,14 +53,17 @@ const Home: NextPage<Iprops> = ({ products, price }) => {
 };
 
 export default Home;
-export const getServerSideProps: GetServerSideProps = async context => {
+export const getServerSideProps: GetServerSideProps<Iprops> = async context => {
   try {
     const param = context.query;
     const data = await getProductApiByPageAndTypeAndPrice(param);
     if (data && data.data.data.length > 0) {
+      const { data: products, totalPage, page } = data.data;
       return {
         props: {
-          products: data.data.data,
+          products,
+          totalPage,
+          page,
         },
       };
     }

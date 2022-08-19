@@ -1,7 +1,8 @@
-import { TextField } from "@mui/material";
 import React, { ChangeEventHandler, FocusEventHandler } from "react";
+import { TextField } from "@mui/material";
 
 type typeVariant = "standard" | "filled" | "outlined" | undefined;
+
 type Size = "medium" | "small";
 interface Iprops {
   fullWidth?: boolean;

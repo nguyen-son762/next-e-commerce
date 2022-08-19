@@ -1,9 +1,8 @@
 import Loader from "@/components/atoms/Loader";
-import Products from "@/products/components/Products";
 import {
   getProductApiByPageAndTypeAndPrice,
   ProductDef,
-} from "@/products/product";
+} from "@/features/products/product";
 import type { GetStaticProps, NextPage } from "next";
 import dynamic from "next/dynamic";
 import Head from "next/head";
@@ -12,7 +11,6 @@ const DefaultLayout = dynamic(
   () => import("@/components/layout/DefaultLayout"),
   { suspense: true, ssr: false }
 );
-import Error from "next/error";
 import useTrans from "@/hooks/useTrans";
 interface Iprops {
   products: ProductDef[];

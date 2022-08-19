@@ -1,3 +1,5 @@
+import { NextPageContext } from "next";
+
 interface Iprops {
   statusCode: number;
 }
@@ -10,7 +12,7 @@ function Error({ statusCode }: Iprops) {
     </p>
   );
 }
-Error.getInitialProps = ({ res, err }: { res: any; err: any }) => {
+Error.getInitialProps = ({ res, err }: NextPageContext) => {
   const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
   return { statusCode };
 };

@@ -1,10 +1,11 @@
-import { navList } from "@/types/navbar.type";
+import { memo } from "react";
 import { Box, Divider, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { memo } from "react";
+
+import { navList } from "@/types/navbar.type";
 import theme from "@/themes/theme";
+
 const useStyles = makeStyles({
   navItemActive: {
     "&::before": {
@@ -40,9 +41,12 @@ function Navbar() {
           key={navItem.name}
         >
           <Typography
-            onClick={() =>
-              router.push(navItem.href, undefined, { shallow: true })
-            }
+            onClick={() => {
+              const urlParams = new URLSearchParams(window.location.search);
+              urlParams.set("order_by_name", "");
+              urlParams.set("order_by_value", "");
+              router.push(navItem.href);
+            }}
             fontWeight={600}
           >
             {navItem.label}

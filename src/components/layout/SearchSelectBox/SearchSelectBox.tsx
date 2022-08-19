@@ -1,4 +1,4 @@
-import { sortList } from "@/constants/selectBox.constants";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   FormControl,
@@ -8,30 +8,47 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+
+import { sortList } from "@/constants/selectBox.constants";
+
+const DEFAUL_ID_SORT_QUERY = 1;
 
 const SearchSelectBox = () => {
-  const [sortQuery, setSortQuery] = useState("id");
+  const [sortQuery, setSortQuery] = useState<number>(DEFAUL_ID_SORT_QUERY);
   const router = useRouter();
 
+  useEffect(() => {
+    const { order_by_name = "", order_by_value = "" } = router.query;
+    if (!order_by_name) {
+      setSortQuery(DEFAUL_ID_SORT_QUERY);
+      return;
+    }
+    const id =
+      sortList.find(
+        item => item.name === order_by_name && item.value === order_by_value
+      )?.id || DEFAUL_ID_SORT_QUERY;
+    setSortQuery(id);
+  }, [router.query, router.query.order_by_name, router.query.order_by_value]);
+
   const handleChange = (event: SelectChangeEvent<number>) => {
-    const searchData = event.target.value + "";
-    setSortQuery(searchData);
-    const name = searchData.split("_")[0];
-    if (name === "id") {
+    const searchVal = Number(event.target.value || 1);
+    setSortQuery(searchVal);
+    const sortItem = sortList.find(item => item.id === searchVal);
+
+    if (searchVal === DEFAUL_ID_SORT_QUERY || !sortItem) {
       router.push(router.pathname);
       return;
     }
-    const value = searchData.split("_")[1];
-    const urlParams = new URLSearchParams();
-    urlParams.set("order_by_name", name);
-    urlParams.set("order_by_value", value);
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set("order_by_name", sortItem?.name);
+    urlParams.set("order_by_value", sortItem?.value);
     router.push(router.pathname + "?" + urlParams.toString());
   };
+
   const renderSelectBoxSort = () => {
     return sortList.map(item => {
       return (
-        <MenuItem key={item.name + item.label} value={item.value}>
+        <MenuItem key={item.id} value={item.id}>
           {item.label}
         </MenuItem>
       );
@@ -45,7 +62,8 @@ const SearchSelectBox = () => {
         <Select
           labelId="sort-label"
           id="sort"
-          value={sortQuery as any}
+          value={sortQuery}
+          label="Sort"
           onChange={handleChange}
         >
           {renderSelectBoxSort()}

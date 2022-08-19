@@ -1,13 +1,14 @@
-import { loginApi, signUpApi } from "./../api/auth.api";
+import create from "zustand";
+import { devtools, persist } from "zustand/middleware";
+import Cookies from "js-cookie";
+
+import { loginApi, signUpApi } from "../api/auth.api";
 import {
   LoginReqDef,
   SignupReqDef,
   UserInformation,
-} from "@/auth/types/auth.type";
-import create from "zustand";
-import { devtools, persist } from "zustand/middleware";
+} from "@/features/auth/types/auth.type";
 import { apiStatusCode } from "@/apis/apiStatus.constants";
-import Cookies from "js-cookie";
 
 interface InitialState {
   user: UserInformation | null;
@@ -15,7 +16,7 @@ interface InitialState {
   signup: (user: SignupReqDef) => Promise<UserInformation | null>;
 }
 
-const useStore = create<InitialState>()(
+const useAuthStore = create<InitialState>()(
   devtools(
     persist(set => ({
       user: null,
@@ -56,4 +57,4 @@ const useStore = create<InitialState>()(
   )
 );
 
-export default useStore;
+export default useAuthStore;

@@ -1,48 +1,52 @@
+import { memo } from "react";
+import { useRouter } from "next/router";
 import { Box, Button, Typography } from "@mui/material";
 import Image from "next/image";
-import logo from "~/public/logo_400x.webp";
 import SearchIcon from "@mui/icons-material/Search";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import CustomTextField from "@/components/atoms/CustomTextField";
-import { makeStyles } from "@mui/styles";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Link from "next/link";
-import { memo } from "react";
-import useStore from "@/auth/store/auth";
+
+import logo from "~/public/logo_400x.webp";
+import CustomTextField from "@/components/atoms/CustomTextField";
+import useAuthStore from "@/features/auth/store/auth";
+import { useStyles } from "./Header.styles";
 
 const schema = yup.object({
   keyword: yup.string().trim().required("Keyword is required"),
 });
-const useStyles = makeStyles({
-  iconSearch: {
-    position: "absolute!important" as any,
-    bottom: 0,
-    right: 0,
-  },
-});
 
 function Header() {
-  const { user } = useStore();
+  const { user } = useAuthStore();
+  const router = useRouter();
+  const classes = useStyles();
   const formik = useFormik({
     initialValues: {
-      keyword: "",
+      keyword: router.query.keyword || "",
     },
     validationSchema: schema,
     onSubmit: values => {
-      console.log(values);
+      if (router.query.keyword === values.keyword) {
+        return;
+      }
+      router.push(`/search?keyword=${values.keyword}`);
     },
   });
-  const classess = useStyles();
+
   return (
     <Box
       display="flex"
       justifyContent="space-between"
-      alignContent="center"
+      alignItems="end"
       py={2}
       px={5}
     >
-      <Image src={logo} width={200} height={50} alt="roya" />
+      <Box className={classes.logo}>
+        <Link href="/">
+          <Image src={logo} width={200} height={50} alt="roya" />
+        </Link>
+      </Box>
       <Box>
         <Box
           component="form"
@@ -54,15 +58,15 @@ function Header() {
           <CustomTextField
             fullWidth
             name="keyword"
-            width={250}
+            width="100%"
             label="Search"
-            value={formik.values.keyword}
+            value={formik.values.keyword as string}
             onChange={formik.handleChange}
             isTextSearch
           />
           <Button
             type="submit"
-            className={classess.iconSearch}
+            className={classes.iconSearch}
             sx={{
               minWidth: 50,
             }}
@@ -82,7 +86,12 @@ function Header() {
             Account
           </Typography>
         </Link>
-        <ShoppingCartIcon />
+        <ShoppingCartIcon
+          sx={{
+            cursor: "pointer",
+          }}
+          onClick={() => router.push("/cart")}
+        />
       </Box>
     </Box>
   );

@@ -1,6 +1,7 @@
 import { CategoryDef } from "@/types/category.type";
 import { ColorDef } from "@/types/color.type";
 import { ImageDef } from "@/types/image.type";
+import { ItemCustomSelect } from "@/types/selectBox.types";
 import { SizeDef } from "@/types/size.type";
 
 export type GetProductParamsDef = {
@@ -18,7 +19,7 @@ export type ProductDef = {
   price: number;
   promotion?: number;
   description: number;
-  category: CategoryDef;
+  category?: CategoryDef;
   details: ProductDetailDef[];
 };
 
@@ -28,4 +29,11 @@ export type ProductDetailDef = {
   color: ColorDef;
   size: SizeDef;
   images: ImageDef[];
+};
+
+export type ProductDetailModalDef = {
+  product: ProductDef;
+  sizes: ItemCustomSelect[];
+  colors: ItemCustomSelect[];
+  thumbnailUrl: string;
 };

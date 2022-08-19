@@ -1,6 +1,7 @@
-import Header from "@/components/layout/Header/Header";
-import { Divider } from "@mui/material";
 import { memo, ReactNode } from "react";
+import { Divider } from "@mui/material";
+
+import Header from "@/components/layout/Header/Header";
 import Navbar from "./Navbar/Navbar";
 
 interface Iprops {

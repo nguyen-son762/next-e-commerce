@@ -1,16 +1,10 @@
-import { AuthPathsEnum } from "@/auth/auth";
-import useStore from "@/auth/store/auth";
+import { AuthPathsEnum } from "@/features/auth/auth";
 import CustomTextField from "@/components/atoms/CustomTextField";
 import Loader from "@/components/atoms/Loader";
 import theme from "@/themes/theme";
 import { LoadingButton } from "@mui/lab";
 import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
 import { useFormik } from "formik";
-const DefaultLayout = dynamic(
-  () => import("@/components/layout/DefaultLayout"),
-  { suspense: true, ssr: false }
-);
-
 import { NextPage } from "next";
 import dynamic from "next/dynamic";
 import Head from "next/head";
@@ -18,6 +12,11 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { Suspense, useEffect, useState } from "react";
 import * as yup from "yup";
+import useAuthStore from "@/features/auth/store/auth";
+const DefaultLayout = dynamic(
+  () => import("@/components/layout/DefaultLayout"),
+  { suspense: true, ssr: false }
+);
 
 const schema = yup.object({
   email: yup
@@ -35,7 +34,7 @@ const schema = yup.object({
 const Login: NextPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const { login } = useStore();
+  const { login } = useAuthStore();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const router = useRouter();

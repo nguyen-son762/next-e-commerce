@@ -1,4 +1,4 @@
-import { AuthEndpointsEnum } from "@/auth/constants/auth.endpoints";
+import { AuthEndpointsEnum } from "@/features/auth/constants/auth.endpoints";
 import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from "axios";
 
 export const api = axios.create({
